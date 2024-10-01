@@ -1,0 +1,7 @@
+---
+title: "Stats 506 PS3"
+author: "Alyssa Yang"
+format: html
+---
+
+# Problem 1 - Vision
