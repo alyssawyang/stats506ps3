@@ -132,6 +132,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="b" class="level2">
 <h2 class="anchored" data-anchor-id="b">1b</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># VIQ220 - Glasses/contact lenses worn for distance</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># RIDAGEMN - Age in Years</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -139,18 +141,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(vision)[<span class="fu">colnames</span>(vision) <span class="sc">==</span> <span class="st">"VIQ220"</span>] <span class="ot">&lt;-</span> <span class="st">"glasses"</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(vision)[<span class="fu">colnames</span>(vision) <span class="sc">==</span> <span class="st">"RIDAGEYR"</span>] <span class="ot">&lt;-</span> <span class="st">"age"</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>vision[vision <span class="sc">==</span> <span class="st">"."</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Redefine glasses variable</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>vision<span class="sc">$</span>glasses[vision<span class="sc">$</span>glasses <span class="sc">==</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>vision<span class="sc">$</span>glasses[vision<span class="sc">$</span>glasses <span class="sc">==</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>vision<span class="sc">$</span>glasses[vision<span class="sc">$</span>glasses <span class="sc">==</span> <span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove all NA values for these two variables</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>vision <span class="ot">&lt;-</span> vision[<span class="sc">!</span><span class="fu">is.na</span>(vision<span class="sc">$</span>age), ]</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>vision <span class="ot">&lt;-</span> vision[<span class="sc">!</span><span class="fu">is.na</span>(vision<span class="sc">$</span>glasses), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace all missing values with NA</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>vision[vision <span class="sc">==</span> <span class="st">"."</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Redefine glasses variable</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>vision<span class="sc">$</span>glasses[vision<span class="sc">$</span>glasses <span class="sc">==</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>vision<span class="sc">$</span>glasses[vision<span class="sc">$</span>glasses <span class="sc">==</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>vision<span class="sc">$</span>glasses[vision<span class="sc">$</span>glasses <span class="sc">==</span> <span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove all NA values for these two variables</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>vision <span class="ot">&lt;-</span> vision[<span class="sc">!</span><span class="fu">is.na</span>(vision<span class="sc">$</span>age), ]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>vision <span class="ot">&lt;-</span> vision[<span class="sc">!</span><span class="fu">is.na</span>(vision<span class="sc">$</span>glasses), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert age in months into age brackets of 10 years</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>vision<span class="sc">$</span>age_brackets <span class="ot">&lt;-</span> <span class="fu">cut</span>(vision<span class="sc">$</span>age, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">10</span>), <span class="at">right =</span> <span class="cn">FALSE</span>, </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0-9"</span>, <span class="st">"10-19"</span>, <span class="st">"20-29"</span>, <span class="st">"30-39"</span>, <span class="st">"40-49"</span>, </span>
@@ -158,119 +164,267 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute proportions for each age bracket</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>proportions <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(glasses <span class="sc">~</span> age_brackets, <span class="at">data =</span> vision, <span class="at">FUN =</span> mean)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(proportions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  age_brackets   glasses
-1        10-19 0.6791188
-2        20-29 0.6734258
-3        30-39 0.6413333
-4        40-49 0.6300129
-5        50-59 0.4499179
-6        60-69 0.3777778
-7        70-79 0.3310962
-8        80-89 0.3311897</code></pre>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(proportions) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Age Bracket"</span>, <span class="st">"Proportion Wearing Glasses/Contacts"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create table of proportions</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(proportions, <span class="at">caption =</span> <span class="st">"Proportion of Respondents Wearing Glasses/Contacts by Age Bracket"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Proportion of Respondents Wearing Glasses/Contacts by Age Bracket</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Age Bracket</th>
+<th style="text-align: right;">Proportion Wearing Glasses/Contacts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">10-19</td>
+<td style="text-align: right;">0.6791188</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">20-29</td>
+<td style="text-align: right;">0.6734258</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">30-39</td>
+<td style="text-align: right;">0.6413333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">40-49</td>
+<td style="text-align: right;">0.6300129</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">50-59</td>
+<td style="text-align: right;">0.4499179</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">60-69</td>
+<td style="text-align: right;">0.3777778</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">70-79</td>
+<td style="text-align: right;">0.3310962</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">80-89</td>
+<td style="text-align: right;">0.3311897</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(proportions) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Age Bracket"</span>, <span class="st">"Proportion Wearing Glasses/Contacts"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create table of proportions</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># kable(proportions, caption = "Proportion of Respondents Wearing Glasses/Contacts by Age Bracket")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="c" class="level2">
 <h2 class="anchored" data-anchor-id="c">1c</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># RIDRETH1 - Race/Ethnicity</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># RIAGENDR - Gender</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># INDFMPIR - Family Poverty Income Ratio</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># RIDRETH1 - Race/Ethnicity</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># RIAGENDR - Gender</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># INDFMPIR - Family Poverty Income Ratio</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(pscl)) <span class="co"># For Pseudo-R^2 function</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename variable columns</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(vision)[<span class="fu">colnames</span>(vision) <span class="sc">==</span> <span class="st">"RIDRETH1"</span>] <span class="ot">&lt;-</span> <span class="st">"race"</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(vision)[<span class="fu">colnames</span>(vision) <span class="sc">==</span> <span class="st">"RIAGENDR"</span>] <span class="ot">&lt;-</span> <span class="st">"gender"</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(vision)[<span class="fu">colnames</span>(vision) <span class="sc">==</span> <span class="st">"INDFMPIR"</span>] <span class="ot">&lt;-</span> <span class="st">"pir"</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert race and gender to factors</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>vision<span class="sc">$</span>race <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(vision<span class="sc">$</span>race)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>vision<span class="sc">$</span>gender <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(vision<span class="sc">$</span>gender)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename levels of race and gender</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(vision<span class="sc">$</span>race) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Mexican American"</span>, <span class="st">"Other Hispanic"</span>, <span class="st">"Non-Hispanic White"</span>, <span class="st">"Non-Hispanic Black"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Other Race - Including Multi-Racial"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(vision<span class="sc">$</span>gender) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 1</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(glasses <span class="sc">~</span> age, <span class="at">data =</span> vision, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Find values for the table</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>odds1 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(model1)) <span class="co"># Convert coefficients from log-odds to odds-ratios</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>size1 <span class="ot">&lt;-</span> <span class="fu">length</span>(model1<span class="sc">$</span>fitted.values) <span class="co"># Find sample size</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>pseudo_r2_output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(pseudo_r2_1 <span class="ot">&lt;-</span> <span class="fu">pR2</span>(model1)) <span class="co"># Suppress output of pR2</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>pseudo_r2_1 <span class="ot">&lt;-</span> pseudo_r2_1[<span class="st">"McFadden"</span>] <span class="co"># Find pseudo R^2 value</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>aic1 <span class="ot">&lt;-</span> <span class="fu">AIC</span>(model1) <span class="co"># Find AIC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove all NA values for race and gender</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>vision <span class="ot">&lt;-</span> vision[<span class="sc">!</span><span class="fu">is.na</span>(vision<span class="sc">$</span>race), ]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>vision <span class="ot">&lt;-</span> vision[<span class="sc">!</span><span class="fu">is.na</span>(vision<span class="sc">$</span>gender), ]</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pscl) <span class="co"># For Pseudo-R^2 function</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Classes and Methods for R originally developed in the
-Political Science Computational Laboratory
-Department of Political Science
-Stanford University (2002-2015),
-by and under the direction of Simon Jackman.
-hurdle and zeroinfl functions by Achim Zeileis.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename variable columns</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(vision)[<span class="fu">colnames</span>(vision) <span class="sc">==</span> <span class="st">"RIDRETH1"</span>] <span class="ot">&lt;-</span> <span class="st">"race"</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(vision)[<span class="fu">colnames</span>(vision) <span class="sc">==</span> <span class="st">"RIAGENDR"</span>] <span class="ot">&lt;-</span> <span class="st">"gender"</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(vision)[<span class="fu">colnames</span>(vision) <span class="sc">==</span> <span class="st">"INDFMPIR"</span>] <span class="ot">&lt;-</span> <span class="st">"pir"</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert race and gender to factors</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>vision<span class="sc">$</span>race <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(vision<span class="sc">$</span>race)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>vision<span class="sc">$</span>gender <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(vision<span class="sc">$</span>gender)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename levels of race and gender</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(vision<span class="sc">$</span>race) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Mexican American"</span>, <span class="st">"Other Hispanic"</span>, <span class="st">"Non-Hispanic White"</span>, <span class="st">"Non-Hispanic Black"</span>,</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Other Race - Including Multi-Racial"</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(vision<span class="sc">$</span>gender) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 2</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(glasses <span class="sc">~</span> age <span class="sc">+</span> race <span class="sc">+</span> gender, <span class="at">data =</span> vision, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Find values for the table</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>odds2 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(model2)) <span class="co"># Convert coefficients from log-odds to odds-ratios</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>size2 <span class="ot">&lt;-</span> <span class="fu">length</span>(model2<span class="sc">$</span>fitted.values) <span class="co"># Find sample size</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>pseudo_r2_output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(pseudo_r2_2 <span class="ot">&lt;-</span> <span class="fu">pR2</span>(model2)) <span class="co"># Suppress output of pR2</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>pseudo_r2_2 <span class="ot">&lt;-</span> pseudo_r2_2[<span class="st">"McFadden"</span>] <span class="co"># Find pseudo R^2 value</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>aic2 <span class="ot">&lt;-</span> <span class="fu">AIC</span>(model2) <span class="co"># Find AIC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 1</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(glasses <span class="sc">~</span> age, <span class="at">data =</span> vision, <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove NA values for pir</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>vision <span class="ot">&lt;-</span> vision[<span class="sc">!</span><span class="fu">is.na</span>(vision<span class="sc">$</span>pir), ]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 3</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(glasses <span class="sc">~</span> age <span class="sc">+</span> race <span class="sc">+</span> gender <span class="sc">+</span> pir, <span class="at">data =</span> vision, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Find values for the table</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>odds3 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(model3)) <span class="co"># Convert coefficients from log-odds to odds-ratios</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>size3 <span class="ot">&lt;-</span> <span class="fu">length</span>(model3<span class="sc">$</span>fitted.values) <span class="co"># Find sample size</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>pseudo_r2_output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(pseudo_r2_3 <span class="ot">&lt;-</span> <span class="fu">pR2</span>(model3)) <span class="co"># Suppress output of pR2</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>pseudo_r2_3 <span class="ot">&lt;-</span> pseudo_r2_3[<span class="st">"McFadden"</span>] <span class="co"># Find pseudo R^2 value</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>aic3 <span class="ot">&lt;-</span> <span class="fu">AIC</span>(model3) <span class="co"># Find AIC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove all NA values for race and gender</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>vision <span class="ot">&lt;-</span> vision[<span class="sc">!</span><span class="fu">is.na</span>(vision<span class="sc">$</span>race), ]</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>vision <span class="ot">&lt;-</span> vision[<span class="sc">!</span><span class="fu">is.na</span>(vision<span class="sc">$</span>gender), ]</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 2</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(glasses <span class="sc">~</span> age <span class="sc">+</span> race <span class="sc">+</span> gender, <span class="at">data =</span> vision, <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the maximum length of the variable names from all models</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>max_length <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">length</span>(<span class="fu">names</span>(odds1)), <span class="fu">length</span>(<span class="fu">names</span>(odds2)), <span class="fu">length</span>(<span class="fu">names</span>(odds3)))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of variable names</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>var_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"(Intercept)"</span>, <span class="st">"Age"</span>, <span class="st">"Other Hispanic"</span>, <span class="st">"Non-Hispanic White"</span>, <span class="st">"Non-Hispanic Black"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Other Race - Including Multi-racial"</span>, <span class="st">"Female"</span>, <span class="st">"Poverty Income Ratio"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame with the odds ratios</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variable =</span> var_names,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model1 =</span> <span class="fu">c</span>(odds1, <span class="fu">rep</span>(<span class="cn">NA</span>, max_length <span class="sc">-</span> <span class="fu">length</span>(odds1))),</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model2 =</span> <span class="fu">c</span>(odds2, <span class="fu">rep</span>(<span class="cn">NA</span>, max_length <span class="sc">-</span> <span class="fu">length</span>(odds2))),</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model3 =</span> odds3</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame with the statistics</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variable =</span> <span class="fu">c</span>(<span class="st">"Sample Size"</span>, <span class="st">"Pseudo R²"</span>, <span class="st">"AIC"</span>),</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model1 =</span> <span class="fu">c</span>(size1, pseudo_r2_1, aic1),</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model2 =</span> <span class="fu">c</span>(size2, pseudo_r2_2, aic2),</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model3 =</span> <span class="fu">c</span>(size3, pseudo_r2_3, aic3)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a separator data frame</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>separator_row <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variable =</span> <span class="st">"-"</span>,</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model1 =</span> <span class="st">"-"</span>,</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model2 =</span> <span class="st">"-"</span>,</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model3 =</span> <span class="st">"-"</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine data frames together</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(odds, separator_row, stats)</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the table using kable</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(results, <span class="at">caption =</span> <span class="st">"Summary of Logistic Regression Models"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Variable"</span>, <span class="st">"Model 1"</span>, <span class="st">"Model 2"</span>, <span class="st">"Model 3"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Summary of Logistic Regression Models</caption>
+<colgroup>
+<col style="width: 38%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Model 1</th>
+<th style="text-align: left;">Model 2</th>
+<th style="text-align: left;">Model 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: left;">3.52884283250537</td>
+<td style="text-align: left;">6.27557877055865</td>
+<td style="text-align: left;">7.50943111677432</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age</td>
+<td style="text-align: left;">0.97562897271348</td>
+<td style="text-align: left;">0.977678717174749</td>
+<td style="text-align: left;">0.978055999935046</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other Hispanic</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">0.855283698504547</td>
+<td style="text-align: left;">0.890455172276266</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Non-Hispanic White</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">0.512255998722561</td>
+<td style="text-align: left;">0.605604012440809</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Non-Hispanic Black</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">0.76960959108977</td>
+<td style="text-align: left;">0.812707057627795</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Other Race - Including Multi-racial</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">0.521528191890914</td>
+<td style="text-align: left;">0.587001983390827</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">0.605264585170351</td>
+<td style="text-align: left;">0.596741475791057</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poverty Income Ratio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">0.892616931108457</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sample Size</td>
+<td style="text-align: left;">6545</td>
+<td style="text-align: left;">6545</td>
+<td style="text-align: left;">6247</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pseudo R²</td>
+<td style="text-align: left;">0.0497312271885485</td>
+<td style="text-align: left;">0.0719544547407939</td>
+<td style="text-align: left;">0.0733995246302627</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AIC</td>
+<td style="text-align: left;">8475.88661639229</td>
+<td style="text-align: left;">8287.76091821125</td>
+<td style="text-align: left;">7909.8082207605</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove NA values for pir</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>vision <span class="ot">&lt;-</span> vision[<span class="sc">!</span><span class="fu">is.na</span>(vision<span class="sc">$</span>pir), ]</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 3</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(glasses <span class="sc">~</span> age <span class="sc">+</span> race <span class="sc">+</span> gender <span class="sc">+</span> pir, <span class="at">data =</span> vision, <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of models and model names</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>models <span class="ot">=</span> <span class="fu">list</span>(model1, model2, model3)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>model_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Model 1 (Age)"</span>, <span class="st">"Model 2 (Age, Race, Gender)"</span>, <span class="st">"Model 3 (Age, Race, Gender, Poverty Income Ratio)"</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate through models and create summary table for each</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> models[[i]]</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find values for the table</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  odds <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(model)) <span class="co"># Convert coefficients from log-odds to odds-ratios</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  size <span class="ot">&lt;-</span> <span class="fu">length</span>(model<span class="sc">$</span>fitted.values) <span class="co"># Find sample size</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  pseudo_r2_output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(pseudo_r2 <span class="ot">&lt;-</span> <span class="fu">pR2</span>(model)) <span class="co"># Suppress output of pR2</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  pseudo_r2_value <span class="ot">&lt;-</span> pseudo_r2[<span class="st">"McFadden"</span>] <span class="co"># Find pseudo R^2 value</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  aic <span class="ot">&lt;-</span> <span class="fu">AIC</span>(model) <span class="co"># Find AIC</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create summary table</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Odds_Ratios =</span> odds)</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(results)</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"size: "</span>, size, <span class="st">"pseudo_r^2: "</span>, pseudo_r2, <span class="st">"aic: "</span>, aic)</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            Odds_Ratios
-(Intercept)    3.528843
-age            0.975629
-size:  6545 pseudo_r^2:  -4235.943 -4457.627 443.3665 0.04973123 0.06549775 0.08804767 aic:  8475.887                                        Odds_Ratios
-(Intercept)                               6.2755788
-age                                       0.9776787
-raceOther Hispanic                        0.8552837
-raceNon-Hispanic White                    0.5122560
-raceNon-Hispanic Black                    0.7696096
-raceOther Race - Including Multi-Racial   0.5215282
-genderFemale                              0.6052646
-size:  6545 pseudo_r^2:  -4136.88 -4457.627 641.4922 0.07195445 0.09336248 0.1255058 aic:  8287.761                                        Odds_Ratios
-(Intercept)                               7.5094311
-age                                       0.9780560
-raceOther Hispanic                        0.8904552
-raceNon-Hispanic White                    0.6056040
-raceNon-Hispanic Black                    0.8127071
-raceOther Race - Including Multi-Racial   0.5870020
-genderFemale                              0.5967415
-pir                                       0.8926169
-size:  6247 pseudo_r^2:  -3946.904 -4259.553 625.2984 0.07339952 0.09524925 0.1279733 aic:  7909.808</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print(results)</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># kable(results, caption = "Summary of Logistic Regression Models")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>

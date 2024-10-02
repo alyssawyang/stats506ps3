@@ -27,6 +27,7 @@ cat("Total sample size: ", nrow(vision))
 
 ## 1b
 ```{r}
+#| code-fold: true
 # VIQ220 - Glasses/contact lenses worn for distance
 # RIDAGEMN - Age in Years
 
@@ -34,6 +35,7 @@ cat("Total sample size: ", nrow(vision))
 colnames(vision)[colnames(vision) == "VIQ220"] <- "glasses"
 colnames(vision)[colnames(vision) == "RIDAGEYR"] <- "age"
 
+# Replace all missing values with NA
 vision[vision == "."] <- NA
 
 # Redefine glasses variable
@@ -47,6 +49,7 @@ vision <- vision[!is.na(vision$glasses), ]
 ```
 
 ```{r}
+#| code-fold: true
 # Convert age in months into age brackets of 10 years
 vision$age_brackets <- cut(vision$age, breaks = seq(0, 90, by = 10), right = FALSE, 
                            labels = c("0-9", "10-19", "20-29", "30-39", "40-49", 
@@ -54,21 +57,21 @@ vision$age_brackets <- cut(vision$age, breaks = seq(0, 90, by = 10), right = FAL
 
 # Compute proportions for each age bracket
 proportions <- aggregate(glasses ~ age_brackets, data = vision, FUN = mean)
-print(proportions)
 colnames(proportions) <- c("Age Bracket", "Proportion Wearing Glasses/Contacts")
 
 # Create table of proportions
-# kable(proportions, caption = "Proportion of Respondents Wearing Glasses/Contacts by Age Bracket")
+kable(proportions, caption = "Proportion of Respondents Wearing Glasses/Contacts by Age Bracket")
 ```
 
 
 ## 1c
 ```{r}
+#| code-fold: true
 # RIDRETH1 - Race/Ethnicity
 # RIAGENDR - Gender
 # INDFMPIR - Family Poverty Income Ratio
 
-library(pscl) # For Pseudo-R^2 function
+suppressMessages(library(pscl)) # For Pseudo-R^2 function
 
 # Rename variable columns
 colnames(vision)[colnames(vision) == "RIDRETH1"] <- "race"
@@ -86,53 +89,94 @@ levels(vision$gender) <- c("Male", "Female")
 ```
 
 ```{r}
+#| code-fold: true
 # Model 1
 model1 <- glm(glasses ~ age, data = vision, family = "binomial")
+
+# Find values for the table
+odds1 <- exp(coef(model1)) # Convert coefficients from log-odds to odds-ratios
+size1 <- length(model1$fitted.values) # Find sample size
+pseudo_r2_output <- capture.output(pseudo_r2_1 <- pR2(model1)) # Suppress output of pR2
+pseudo_r2_1 <- pseudo_r2_1["McFadden"] # Find pseudo R^2 value
+aic1 <- AIC(model1) # Find AIC
 ```
 
 ```{r}
+#| code-fold: true
 # Remove all NA values for race and gender
 vision <- vision[!is.na(vision$race), ]
 vision <- vision[!is.na(vision$gender), ]
 
 # Model 2
 model2 <- glm(glasses ~ age + race + gender, data = vision, family = "binomial")
+
+# Find values for the table
+odds2 <- exp(coef(model2)) # Convert coefficients from log-odds to odds-ratios
+size2 <- length(model2$fitted.values) # Find sample size
+pseudo_r2_output <- capture.output(pseudo_r2_2 <- pR2(model2)) # Suppress output of pR2
+pseudo_r2_2 <- pseudo_r2_2["McFadden"] # Find pseudo R^2 value
+aic2 <- AIC(model2) # Find AIC
 ```
 
 ```{r}
+#| code-fold: true
 # Remove NA values for pir
 vision <- vision[!is.na(vision$pir), ]
 
 # Model 3
 model3 <- glm(glasses ~ age + race + gender + pir, data = vision, family = "binomial")
 
+# Find values for the table
+odds3 <- exp(coef(model3)) # Convert coefficients from log-odds to odds-ratios
+size3 <- length(model3$fitted.values) # Find sample size
+pseudo_r2_output <- capture.output(pseudo_r2_3 <- pR2(model3)) # Suppress output of pR2
+pseudo_r2_3 <- pseudo_r2_3["McFadden"] # Find pseudo R^2 value
+aic3 <- AIC(model3) # Find AIC
 ```
-
 
 ```{r}
-# Create list of models and model names
-models = list(model1, model2, model3)
-model_names <- c("Model 1 (Age)", "Model 2 (Age, Race, Gender)", "Model 3 (Age, Race, Gender, Poverty Income Ratio)")
+#| code-fold: true
+# Find the maximum length of the variable names from all models
+max_length <- max(length(names(odds1)), length(names(odds2)), length(names(odds3)))
 
-# Iterate through models and create summary table for each
-for (i in 1:3) {
-  model <- models[[i]]
-  
-  # Find values for the table
-  odds <- exp(coef(model)) # Convert coefficients from log-odds to odds-ratios
-  size <- length(model$fitted.values) # Find sample size
-  pseudo_r2_output <- capture.output(pseudo_r2 <- pR2(model)) # Suppress output of pR2
-  pseudo_r2_value <- pseudo_r2["McFadden"] # Find pseudo R^2 value
-  aic <- AIC(model) # Find AIC
-  
-  # Create summary table
-  results <- data.frame(Odds_Ratios = odds)
-  print(results)
-  cat("size: ", size, "pseudo_r^2: ", pseudo_r2, "aic: ", aic)
-}
-# print(results)
-# kable(results, caption = "Summary of Logistic Regression Models")
+# Create list of variable names
+var_names <- c("(Intercept)", "Age", "Other Hispanic", "Non-Hispanic White", "Non-Hispanic Black",
+               "Other Race - Including Multi-racial", "Female", "Poverty Income Ratio")
+
+# Create a data frame with the odds ratios
+odds <- data.frame(
+  Variable = var_names,
+  Model1 = c(odds1, rep(NA, max_length - length(odds1))),
+  Model2 = c(odds2, rep(NA, max_length - length(odds2))),
+  Model3 = odds3
+)
+
+# Create a data frame with the statistics
+stats <- data.frame(
+  Variable = c("Sample Size", "Pseudo R²", "AIC"),
+  Model1 = c(size1, pseudo_r2_1, aic1),
+  Model2 = c(size2, pseudo_r2_2, aic2),
+  Model3 = c(size3, pseudo_r2_3, aic3)
+)
+
+# Create a separator data frame
+separator_row <- data.frame(
+  Variable = "-",
+  Model1 = "-",
+  Model2 = "-",
+  Model3 = "-"
+)
+
+# Combine data frames together
+results <- rbind(odds, separator_row, stats)
+
+# Create the table using kable
+kable(results, caption = "Summary of Logistic Regression Models", row.names = FALSE,
+      col.names = c("Variable", "Model 1", "Model 2", "Model 3"))
 ```
+
+
+
 
 
 
