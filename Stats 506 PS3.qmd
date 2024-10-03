@@ -159,7 +159,7 @@ stats <- data.frame(
   Model3 = c(size3, pseudo_r2_3, aic3)
 )
 
-# Create a separator data frame
+# Create a separator data frame for easier readability
 separator_row <- data.frame(
   Variable = "-",
   Model1 = "-",
@@ -176,8 +176,115 @@ kable(results, caption = "Summary of Logistic Regression Models", row.names = FA
 ```
 
 
+## 1d
+```{r}
+# library(multcomp)
+
+# Extract the coefficient for Females in model 3
+# print(summary(model3))
+# cat("Odds-Ratio for Females: ", odds3["genderFemale"])
+```
+
+<!-- The odds-ratio for females is around 0.5967, and from the summary we can see that the p-value for this coefficient -->
 
 
+# Problem 2 - Sakila
+```{r}
+library(DBI)
+library(RSQLite)
+
+sakila <- dbConnect(SQLite(), "sakila_master.db")
+dbListTables(sakila)
+
+gg <- function(query) {
+  dbGetQuery(sakila, query)
+}
+```
+
+
+## 2a
+```{r}
+# What year is the oldest movie from, and how many movies were released in that year?
+
+gg("
+SELECT release_year AS year, count(film_id) AS num_movies
+  FROM film
+ ORDER BY release_year
+ LIMIT 1
+")
+```
+
+
+## 2b
+```{r}
+# What genre of movie is the least common in the data, and how many movies are of this genre?
+
+# Extract tables using SQL queries
+film_category <- gg("SELECT * FROM film_category")
+category <- gg("SELECT * FROM category")
+
+# Find the genre with the least amount of movies
+genre_counts <- table(film_category["category_id"])
+min_genre <- which.min(genre_counts)
+
+# Match the category_ids to find the name of the genre
+genre <- category$name[category["category_id"] == min_genre]
+
+# Find number of movies with this genre
+movies <- film_category$film_id[film_category["category_id"] == min_genre]
+num_movies <- length(movies)
+
+cat("genre: ", genre, "\nnum_movies: ", num_movies)
+```
+
+```{r}
+# Single SQL query
+gg("
+SELECT c.name AS genre, COUNT(f.film_id) AS num_movies
+  FROM film_category AS f
+ INNER JOIN category AS c ON f.category_id = c.category_id
+ GROUP BY f.category_id
+ ORDER BY num_movies
+ LIMIT 1
+")
+```
+
+
+## 2c
+```{r}
+# Identify which country or countries have exactly 13 customers.
+
+# Extract tables using SQL queries
+country <- gg("SELECT * FROM country")
+city <- gg("SELECT * FROM city")
+address <- gg("SELECT * FROM address")
+customer <- gg("SELECT * FROM customer")
+
+# Find cities that customers are from
+cities <- address$city_id[match(customer$address_id, address$address_id)]
+
+# Find the countries of each city that customers are from
+countries <- city$country_id[match(cities, city$city_id)]
+
+# Create table with frequencies of how many customers are from each country
+table <- table(country$country[match(countries, country$country_id)])
+
+# Find countries where frequency = 13
+table[table == 13]
+```
+
+```{r}
+# Single SQL query
+gg("
+SELECT co.country
+  FROM country AS co
+ INNER JOIN city AS ci ON co.country_id = ci.country_id
+ INNER JOIN address AS a ON a.city_id = ci.city_id
+ INNER JOIN customer AS cu ON cu.address_id = a.address_id
+ GROUP BY co.country_id
+ HAVING COUNT(cu.customer_id) = 13
+")
+```
 
 
 
