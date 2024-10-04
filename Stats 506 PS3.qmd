@@ -190,12 +190,14 @@ kable(results, caption = "Summary of Logistic Regression Models", row.names = FA
 
 # Problem 2 - Sakila
 ```{r}
+#| code-fold: true
 library(DBI)
 library(RSQLite)
 
+# Connect to Sakila database
 sakila <- dbConnect(SQLite(), "sakila_master.db")
-dbListTables(sakila)
 
+# Shortcut for queries
 gg <- function(query) {
   dbGetQuery(sakila, query)
 }
@@ -204,8 +206,7 @@ gg <- function(query) {
 
 ## 2a
 ```{r}
-# What year is the oldest movie from, and how many movies were released in that year?
-
+#| code-fold: true
 gg("
 SELECT release_year AS year, count(film_id) AS num_movies
   FROM film
@@ -217,8 +218,7 @@ SELECT release_year AS year, count(film_id) AS num_movies
 
 ## 2b
 ```{r}
-# What genre of movie is the least common in the data, and how many movies are of this genre?
-
+#| code-fold: true
 # Extract tables using SQL queries
 film_category <- gg("SELECT * FROM film_category")
 category <- gg("SELECT * FROM category")
@@ -238,6 +238,7 @@ cat("genre: ", genre, "\nnum_movies: ", num_movies)
 ```
 
 ```{r}
+#| code-fold: true
 # Single SQL query
 gg("
 SELECT c.name AS genre, COUNT(f.film_id) AS num_movies
@@ -252,8 +253,7 @@ SELECT c.name AS genre, COUNT(f.film_id) AS num_movies
 
 ## 2c
 ```{r}
-# Identify which country or countries have exactly 13 customers.
-
+#| code-fold: true
 # Extract tables using SQL queries
 country <- gg("SELECT * FROM country")
 city <- gg("SELECT * FROM city")
@@ -261,6 +261,7 @@ address <- gg("SELECT * FROM address")
 customer <- gg("SELECT * FROM customer")
 
 # Find cities that customers are from
+# I used chatGPT to help me come up with the match() function
 cities <- address$city_id[match(customer$address_id, address$address_id)]
 
 # Find the countries of each city that customers are from
@@ -274,6 +275,7 @@ table[table == 13]
 ```
 
 ```{r}
+#| code-fold: true
 # Single SQL query
 gg("
 SELECT co.country
@@ -286,6 +288,59 @@ SELECT co.country
 ")
 ```
 
+
+# Problem 3 - US Records
+```{r}
+#| code-fold: true
+# Load in records csv file
+records <- read.csv("us-500.csv")
+View(records)
+```
+
+
+## 3a
+```{r}
+#| code-fold: true
+# Find number of emails that end in 'com'
+num_com <- length(records$email[grepl("com$", records$email)])
+
+# Divide by total number of records to find proportion
+prop <- num_com / nrow(records)
+
+cat('Proportion of emails with TLD “.com”: ', prop)
+```
+
+
+## 3b
+```{r}
+#| code-fold: true
+# Split emails by @
+email_split <- strsplit(records$email, "@")
+email <- sapply(email_split, function(x) x[1])
+address <- sapply(email_split, function(x) x[2])
+
+# Split addresses by .
+address_split <- strsplit(address, "\\.")
+domain <- sapply(address_split, function(x) x[1])
+tld <- sapply(address_split, function(x) x[2])
+
+# Find emails with non-alphanumeric characters
+non_email <- grepl("[^A-Za-z0-9]", email)
+non_domain <- grepl("[^A-Za-z0-9]", domain)
+non_tld <- grepl("[^A-Za-z0-9]", tld)
+
+# Find proportion of emails with non-alphanumeric characters
+num_non_alphanumeric <- sum(non_email | non_domain | non_tld)
+prop <- num_non_alphanumeric / nrow(records)
+
+cat('Proportion of emails with non-alphanumeric characters: ', prop)
+```
+
+
+## 3c
+```{r}
+
+```
 
 
 
