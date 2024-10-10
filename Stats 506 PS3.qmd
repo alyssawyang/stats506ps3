@@ -178,14 +178,33 @@ kable(results, caption = "Summary of Logistic Regression Models", row.names = FA
 
 ## 1d
 ```{r}
-# library(multcomp)
+#| code-fold: true
+suppressMessages(library(multcomp))
 
 # Extract the coefficient for Females in model 3
-# print(summary(model3))
-# cat("Odds-Ratio for Females: ", odds3["genderFemale"])
+print(summary(model3))
+cat("Odds-Ratio for Females: ", odds3["genderFemale"])
 ```
 
-<!-- The odds-ratio for females is around 0.5967, and from the summary we can see that the p-value for this coefficient -->
+The odds-ratio for females is around 0.5967, and from the summary, we can see that the p-value for the genderFemale coefficient is < 2e-16 which is less than level $\alpha = 0.05$. Thus, this result is statistically significant, and we can conclude that the odds of women being wearers of glasses/contact lenses for distance vision is lower than the odds for males.
+
+```{r}
+#| code-fold: true
+# Create contingency table for gender vs glasses
+table_gender_glasses <- table(vision$gender, vision$glasses)
+
+# Find proportions of glasses-wearers for men and women
+prop_male <- table_gender_glasses["Male", "1"] / sum(table_gender_glasses["Male", ])
+prop_female <- table_gender_glasses["Female", "1"] / sum(table_gender_glasses["Female", ])
+
+cat('Proportion of male glasses-wearers: ', prop_male, '\n')
+cat('Proportion of female glasses-wearers: ', prop_female, '\n')
+
+# Perform Chi-Square test
+chi_test <- chisq.test(table_gender_glasses)
+print(chi_test)
+```
+The p-value from the chi-square test is < 2.2e-16, which is less than significant level $\alpha = 0.05$, thus we can conclude that the proportion of glasses wearers is significantly different between men and women. From the contingency table, we can see that the proportion of women being wearers of glasses/contact lenses for distance vision is lower than the proportion for males.
 
 
 # Problem 2 - Sakila
@@ -339,10 +358,44 @@ cat('Proportion of emails with non-alphanumeric characters: ', prop)
 
 ## 3c
 ```{r}
+#| code-fold: true
+# Extract area codes
+phone1ac <- substr(records$phone1, 1, 3)
+phone2ac <- substr(records$phone2, 1, 3)
 
+# Find the 5 most common ones
+most_common <- sort(table(c(phone1ac, phone2ac)), decreasing = TRUE)[1:5]
+
+cat('The 5 most common area codes are: ', names(most_common))
 ```
 
 
+## 3d
+```{r}
+#| code-fold: true
+# Find all addresses with at least one number at the end (apt number)
+apartments <- records$address[grepl("[0-9]+$", records$address)]
+
+# Extract apartment number
+apartment_split <- strsplit(apartments, " ")
+apt_numbers <- sapply(apartment_split, function(x) x[length(x)])
+apt_numbers <- as.numeric(sub("#", "", apt_numbers))
+
+# Graph histogram of the log of apartment numbers
+hist(log(apt_numbers), main = "Histogram of the log of apartment numbers", xlab = "Log of apartment numbers")
+```
+
+
+## 3e
+```{r}
+#| code-fold: true
+# Extract the first number of each apartment number
+first_nums <- as.numeric(substr(apt_numbers, 1, 1))
+
+# Plot histogram of first numbers
+hist(first_nums, main = "Histogram of apartment number leading digit", xlab = "Leading digit")
+```
+This distribution looks closer to a Uniform distribution rather than Benford's law which states that the probability of a higher leading-numbers is smaller than lower ones (the distribution would be decreasing as the first number increases). Thus, I do not think that the apartment numbers would pass as real data.
 
 
 

@@ -69,6 +69,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="Stats 506 PS3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Stats 506 PS3_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -430,13 +459,95 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="d" class="level2">
 <h2 class="anchored" data-anchor-id="d">1d</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(multcomp)</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(multcomp))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the coefficient for Females in model 3</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print(summary(model3))</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># cat("Odds-Ratio for Females: ", odds3["genderFemale"])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(model3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = glasses ~ age + race + gender + pir, family = "binomial", 
+    data = vision)
+
+Coefficients:
+                                         Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept)                              2.016160   0.087788  22.966  &lt; 2e-16
+age                                     -0.022188   0.001295 -17.135  &lt; 2e-16
+raceOther Hispanic                      -0.116023   0.168265  -0.690 0.490495
+raceNon-Hispanic White                  -0.501529   0.075149  -6.674 2.49e-11
+raceNon-Hispanic Black                  -0.207385   0.079217  -2.618 0.008847
+raceOther Race - Including Multi-Racial -0.532727   0.140152  -3.801 0.000144
+genderFemale                            -0.516271   0.054305  -9.507  &lt; 2e-16
+pir                                     -0.113598   0.017707  -6.415 1.41e-10
+                                           
+(Intercept)                             ***
+age                                     ***
+raceOther Hispanic                         
+raceNon-Hispanic White                  ***
+raceNon-Hispanic Black                  ** 
+raceOther Race - Including Multi-Racial ***
+genderFemale                            ***
+pir                                     ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 8519.1  on 6246  degrees of freedom
+Residual deviance: 7893.8  on 6239  degrees of freedom
+AIC: 7909.8
+
+Number of Fisher Scoring iterations: 4</code></pre>
 </div>
-<!-- The odds-ratio for females is around 0.5967, and from the summary we can see that the p-value for this coefficient -->
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Odds-Ratio for Females: "</span>, odds3[<span class="st">"genderFemale"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Odds-Ratio for Females:  0.5967415</code></pre>
+</div>
+</div>
+<p>The odds-ratio for females is around 0.5967, and from the summary, we can see that the p-value for the genderFemale coefficient is &lt; 2e-16 which is less than level <span class="math inline">\(\alpha = 0.05\)</span>. Thus, this result is statistically significant, and we can conclude that the odds of women being wearers of glasses/contact lenses for distance vision is lower than the odds for males.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create contingency table for gender vs glasses</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>table_gender_glasses <span class="ot">&lt;-</span> <span class="fu">table</span>(vision<span class="sc">$</span>gender, vision<span class="sc">$</span>glasses)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Find proportions of glasses-wearers for men and women</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>prop_male <span class="ot">&lt;-</span> table_gender_glasses[<span class="st">"Male"</span>, <span class="st">"1"</span>] <span class="sc">/</span> <span class="fu">sum</span>(table_gender_glasses[<span class="st">"Male"</span>, ])</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>prop_female <span class="ot">&lt;-</span> table_gender_glasses[<span class="st">"Female"</span>, <span class="st">"1"</span>] <span class="sc">/</span> <span class="fu">sum</span>(table_gender_glasses[<span class="st">"Female"</span>, ])</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'Proportion of male glasses-wearers: '</span>, prop_male, <span class="st">'</span><span class="sc">\n</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Proportion of male glasses-wearers:  0.6285621 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'Proportion of female glasses-wearers: '</span>, prop_female, <span class="st">'</span><span class="sc">\n</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Proportion of female glasses-wearers:  0.5237946 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform Chi-Square test</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>chi_test <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(table_gender_glasses)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(chi_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test with Yates' continuity correction
+
+data:  table_gender_glasses
+X-squared = 69.683, df = 1, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>The p-value from the chi-square test is &lt; 2.2e-16, which is less than significant level <span class="math inline">\(\alpha = 0.05\)</span>, thus we can conclude that the proportion of glasses wearers is significantly different between men and women. From the contingency table, we can see that the proportion of women being wearers of glasses/contact lenses for distance vision is lower than the proportion for males.</p>
 </section>
 </section>
 <section id="problem-2---sakila" class="level1">
@@ -444,16 +555,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RSQLite)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to Sakila database</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>sakila <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">SQLite</span>(), <span class="st">"sakila_master.db"</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Shortcut for queries</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>gg <span class="ot">&lt;-</span> <span class="cf">function</span>(query) {</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbGetQuery</span>(sakila, query)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RSQLite)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to Sakila database</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>sakila <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">SQLite</span>(), <span class="st">"sakila_master.db"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Shortcut for queries</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>gg <span class="ot">&lt;-</span> <span class="cf">function</span>(query) {</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbGetQuery</span>(sakila, query)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="a-1" class="level2">
@@ -461,12 +572,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg</span>(<span class="st">"</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT release_year AS year, count(film_id) AS num_movies</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">  FROM film</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st"> ORDER BY release_year</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st"> LIMIT 1</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg</span>(<span class="st">"</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT release_year AS year, count(film_id) AS num_movies</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="st">  FROM film</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="st"> ORDER BY release_year</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="st"> LIMIT 1</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  year num_movies
@@ -479,22 +590,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract tables using SQL queries</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>film_category <span class="ot">&lt;-</span> <span class="fu">gg</span>(<span class="st">"SELECT * FROM film_category"</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>category <span class="ot">&lt;-</span> <span class="fu">gg</span>(<span class="st">"SELECT * FROM category"</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the genre with the least amount of movies</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>genre_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(film_category[<span class="st">"category_id"</span>])</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>min_genre <span class="ot">&lt;-</span> <span class="fu">which.min</span>(genre_counts)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Match the category_ids to find the name of the genre</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>genre <span class="ot">&lt;-</span> category<span class="sc">$</span>name[category[<span class="st">"category_id"</span>] <span class="sc">==</span> min_genre]</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Find number of movies with this genre</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>movies <span class="ot">&lt;-</span> film_category<span class="sc">$</span>film_id[film_category[<span class="st">"category_id"</span>] <span class="sc">==</span> min_genre]</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>num_movies <span class="ot">&lt;-</span> <span class="fu">length</span>(movies)</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"genre: "</span>, genre, <span class="st">"</span><span class="sc">\n</span><span class="st">num_movies: "</span>, num_movies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract tables using SQL queries</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>film_category <span class="ot">&lt;-</span> <span class="fu">gg</span>(<span class="st">"SELECT * FROM film_category"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>category <span class="ot">&lt;-</span> <span class="fu">gg</span>(<span class="st">"SELECT * FROM category"</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the genre with the least amount of movies</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>genre_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(film_category[<span class="st">"category_id"</span>])</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>min_genre <span class="ot">&lt;-</span> <span class="fu">which.min</span>(genre_counts)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Match the category_ids to find the name of the genre</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>genre <span class="ot">&lt;-</span> category<span class="sc">$</span>name[category[<span class="st">"category_id"</span>] <span class="sc">==</span> min_genre]</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Find number of movies with this genre</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>movies <span class="ot">&lt;-</span> film_category<span class="sc">$</span>film_id[film_category[<span class="st">"category_id"</span>] <span class="sc">==</span> min_genre]</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>num_movies <span class="ot">&lt;-</span> <span class="fu">length</span>(movies)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"genre: "</span>, genre, <span class="st">"</span><span class="sc">\n</span><span class="st">num_movies: "</span>, num_movies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>genre:  Music 
@@ -504,15 +615,15 @@ num_movies:  51</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Single SQL query</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gg</span>(<span class="st">"</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT c.name AS genre, COUNT(f.film_id) AS num_movies</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">  FROM film_category AS f</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st"> INNER JOIN category AS c ON f.category_id = c.category_id</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st"> GROUP BY f.category_id</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st"> ORDER BY num_movies</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st"> LIMIT 1</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Single SQL query</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gg</span>(<span class="st">"</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT c.name AS genre, COUNT(f.film_id) AS num_movies</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="st">  FROM film_category AS f</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="st"> INNER JOIN category AS c ON f.category_id = c.category_id</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="st"> GROUP BY f.category_id</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="st"> ORDER BY num_movies</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="st"> LIMIT 1</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  genre num_movies
@@ -525,24 +636,24 @@ num_movies:  51</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract tables using SQL queries</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>country <span class="ot">&lt;-</span> <span class="fu">gg</span>(<span class="st">"SELECT * FROM country"</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>city <span class="ot">&lt;-</span> <span class="fu">gg</span>(<span class="st">"SELECT * FROM city"</span>)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>address <span class="ot">&lt;-</span> <span class="fu">gg</span>(<span class="st">"SELECT * FROM address"</span>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>customer <span class="ot">&lt;-</span> <span class="fu">gg</span>(<span class="st">"SELECT * FROM customer"</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Find cities that customers are from</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># I used chatGPT to help me come up with the match() function</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>cities <span class="ot">&lt;-</span> address<span class="sc">$</span>city_id[<span class="fu">match</span>(customer<span class="sc">$</span>address_id, address<span class="sc">$</span>address_id)]</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the countries of each city that customers are from</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>countries <span class="ot">&lt;-</span> city<span class="sc">$</span>country_id[<span class="fu">match</span>(cities, city<span class="sc">$</span>city_id)]</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create table with frequencies of how many customers are from each country</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>table <span class="ot">&lt;-</span> <span class="fu">table</span>(country<span class="sc">$</span>country[<span class="fu">match</span>(countries, country<span class="sc">$</span>country_id)])</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Find countries where frequency = 13</span></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>table[table <span class="sc">==</span> <span class="dv">13</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract tables using SQL queries</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>country <span class="ot">&lt;-</span> <span class="fu">gg</span>(<span class="st">"SELECT * FROM country"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>city <span class="ot">&lt;-</span> <span class="fu">gg</span>(<span class="st">"SELECT * FROM city"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>address <span class="ot">&lt;-</span> <span class="fu">gg</span>(<span class="st">"SELECT * FROM address"</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>customer <span class="ot">&lt;-</span> <span class="fu">gg</span>(<span class="st">"SELECT * FROM customer"</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Find cities that customers are from</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># I used chatGPT to help me come up with the match() function</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>cities <span class="ot">&lt;-</span> address<span class="sc">$</span>city_id[<span class="fu">match</span>(customer<span class="sc">$</span>address_id, address<span class="sc">$</span>address_id)]</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the countries of each city that customers are from</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>countries <span class="ot">&lt;-</span> city<span class="sc">$</span>country_id[<span class="fu">match</span>(cities, city<span class="sc">$</span>city_id)]</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create table with frequencies of how many customers are from each country</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>table <span class="ot">&lt;-</span> <span class="fu">table</span>(country<span class="sc">$</span>country[<span class="fu">match</span>(countries, country<span class="sc">$</span>country_id)])</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Find countries where frequency = 13</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>table[table <span class="sc">==</span> <span class="dv">13</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -553,16 +664,16 @@ Argentina   Nigeria
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Single SQL query</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gg</span>(<span class="st">"</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT co.country</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="st">  FROM country AS co</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="st"> INNER JOIN city AS ci ON co.country_id = ci.country_id</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="st"> INNER JOIN address AS a ON a.city_id = ci.city_id</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="st"> INNER JOIN customer AS cu ON cu.address_id = a.address_id</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="st"> GROUP BY co.country_id</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="st"> HAVING COUNT(cu.customer_id) = 13</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Single SQL query</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gg</span>(<span class="st">"</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT co.country</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="st">  FROM country AS co</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="st"> INNER JOIN city AS ci ON co.country_id = ci.country_id</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="st"> INNER JOIN address AS a ON a.city_id = ci.city_id</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="st"> INNER JOIN customer AS cu ON cu.address_id = a.address_id</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="st"> GROUP BY co.country_id</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="st"> HAVING COUNT(cu.customer_id) = 13</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    country
@@ -577,9 +688,9 @@ Argentina   Nigeria
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load in records csv file</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>records <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"us-500.csv"</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(records)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load in records csv file</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>records <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"us-500.csv"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(records)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="a-2" class="level2">
@@ -587,13 +698,13 @@ Argentina   Nigeria
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find number of emails that end in 'com'</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>num_com <span class="ot">&lt;-</span> <span class="fu">length</span>(records<span class="sc">$</span>email[<span class="fu">grepl</span>(<span class="st">"com$"</span>, records<span class="sc">$</span>email)])</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Divide by total number of records to find proportion</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> num_com <span class="sc">/</span> <span class="fu">nrow</span>(records)</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'Proportion of emails with TLD “.com”: '</span>, prop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find number of emails that end in 'com'</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>num_com <span class="ot">&lt;-</span> <span class="fu">length</span>(records<span class="sc">$</span>email[<span class="fu">grepl</span>(<span class="st">"com$"</span>, records<span class="sc">$</span>email)])</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Divide by total number of records to find proportion</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> num_com <span class="sc">/</span> <span class="fu">nrow</span>(records)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'Proportion of emails with TLD “.com”: '</span>, prop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Proportion of emails with TLD “.com”:  0.732</code></pre>
@@ -605,26 +716,26 @@ Argentina   Nigeria
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split emails by @</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>email_split <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(records<span class="sc">$</span>email, <span class="st">"@"</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>email <span class="ot">&lt;-</span> <span class="fu">sapply</span>(email_split, <span class="cf">function</span>(x) x[<span class="dv">1</span>])</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>address <span class="ot">&lt;-</span> <span class="fu">sapply</span>(email_split, <span class="cf">function</span>(x) x[<span class="dv">2</span>])</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Split addresses by .</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>address_split <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(address, <span class="st">"</span><span class="sc">\\</span><span class="st">."</span>)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>domain <span class="ot">&lt;-</span> <span class="fu">sapply</span>(address_split, <span class="cf">function</span>(x) x[<span class="dv">1</span>])</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>tld <span class="ot">&lt;-</span> <span class="fu">sapply</span>(address_split, <span class="cf">function</span>(x) x[<span class="dv">2</span>])</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Find emails with non-alphanumeric characters</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>non_email <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">"[^A-Za-z0-9]"</span>, email)</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>non_domain <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">"[^A-Za-z0-9]"</span>, domain)</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>non_tld <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">"[^A-Za-z0-9]"</span>, tld)</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Find proportion of emails with non-alphanumeric characters</span></span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>num_non_alphanumeric <span class="ot">&lt;-</span> <span class="fu">sum</span>(non_email <span class="sc">|</span> non_domain <span class="sc">|</span> non_tld)</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> num_non_alphanumeric <span class="sc">/</span> <span class="fu">nrow</span>(records)</span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'Proportion of emails with non-alphanumeric characters: '</span>, prop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split emails by @</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>email_split <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(records<span class="sc">$</span>email, <span class="st">"@"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>email <span class="ot">&lt;-</span> <span class="fu">sapply</span>(email_split, <span class="cf">function</span>(x) x[<span class="dv">1</span>])</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>address <span class="ot">&lt;-</span> <span class="fu">sapply</span>(email_split, <span class="cf">function</span>(x) x[<span class="dv">2</span>])</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Split addresses by .</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>address_split <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(address, <span class="st">"</span><span class="sc">\\</span><span class="st">."</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>domain <span class="ot">&lt;-</span> <span class="fu">sapply</span>(address_split, <span class="cf">function</span>(x) x[<span class="dv">1</span>])</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>tld <span class="ot">&lt;-</span> <span class="fu">sapply</span>(address_split, <span class="cf">function</span>(x) x[<span class="dv">2</span>])</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Find emails with non-alphanumeric characters</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>non_email <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">"[^A-Za-z0-9]"</span>, email)</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>non_domain <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">"[^A-Za-z0-9]"</span>, domain)</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>non_tld <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">"[^A-Za-z0-9]"</span>, tld)</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Find proportion of emails with non-alphanumeric characters</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>num_non_alphanumeric <span class="ot">&lt;-</span> <span class="fu">sum</span>(non_email <span class="sc">|</span> non_domain <span class="sc">|</span> non_tld)</span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> num_non_alphanumeric <span class="sc">/</span> <span class="fu">nrow</span>(records)</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'Proportion of emails with non-alphanumeric characters: '</span>, prop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Proportion of emails with non-alphanumeric characters:  0.506</code></pre>
@@ -633,6 +744,68 @@ Argentina   Nigeria
 </section>
 <section id="c-2" class="level2">
 <h2 class="anchored" data-anchor-id="c-2">3c</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract area codes</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>phone1ac <span class="ot">&lt;-</span> <span class="fu">substr</span>(records<span class="sc">$</span>phone1, <span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>phone2ac <span class="ot">&lt;-</span> <span class="fu">substr</span>(records<span class="sc">$</span>phone2, <span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the 5 most common ones</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>most_common <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">c</span>(phone1ac, phone2ac)), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'The 5 most common area codes are: '</span>, <span class="fu">names</span>(most_common))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>The 5 most common area codes are:  973 212 215 410 201</code></pre>
+</div>
+</div>
+</section>
+<section id="d-1" class="level2">
+<h2 class="anchored" data-anchor-id="d-1">3d</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all addresses with at least one number at the end (apt number)</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>apartments <span class="ot">&lt;-</span> records<span class="sc">$</span>address[<span class="fu">grepl</span>(<span class="st">"[0-9]+$"</span>, records<span class="sc">$</span>address)]</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract apartment number</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>apartment_split <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(apartments, <span class="st">" "</span>)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>apt_numbers <span class="ot">&lt;-</span> <span class="fu">sapply</span>(apartment_split, <span class="cf">function</span>(x) x[<span class="fu">length</span>(x)])</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>apt_numbers <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">sub</span>(<span class="st">"#"</span>, <span class="st">""</span>, apt_numbers))</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Graph histogram of the log of apartment numbers</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(apt_numbers), <span class="at">main =</span> <span class="st">"Histogram of the log of apartment numbers"</span>, <span class="at">xlab =</span> <span class="st">"Log of apartment numbers"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats-506-PS3_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="e" class="level2">
+<h2 class="anchored" data-anchor-id="e">3e</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the first number of each apartment number</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>first_nums <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">substr</span>(apt_numbers, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot histogram of first numbers</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(first_nums, <span class="at">main =</span> <span class="st">"Histogram of apartment number leading digit"</span>, <span class="at">xlab =</span> <span class="st">"Leading digit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats-506-PS3_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This distribution looks closer to a Uniform distribution rather than Benford’s law which states that the probability of a higher leading-numbers is smaller than lower ones (the distribution would be decreasing as the first number increases). Thus, I do not think that the apartment numbers would pass as real data.</p>
 </section>
 </section>
 
