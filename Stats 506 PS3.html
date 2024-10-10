@@ -775,36 +775,36 @@ Argentina   Nigeria
 <span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>apt_numbers <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">sub</span>(<span class="st">"#"</span>, <span class="st">""</span>, apt_numbers))</span>
 <span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Graph histogram of the log of apartment numbers</span></span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(apt_numbers), <span class="at">main =</span> <span class="st">"Histogram of the log of apartment numbers"</span>, <span class="at">xlab =</span> <span class="st">"Log of apartment numbers"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="st">"hist_log_apt_nums.png"</span>)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(apt_numbers), <span class="at">main =</span> <span class="st">"Histogram of the log of apartment numbers"</span>, <span class="at">xlab =</span> <span class="st">"Log of apartment numbers"</span>)</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Stats-506-PS3_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="cell-output cell-output-stdout">
+<pre><code>quartz_off_screen 
+                2 </code></pre>
 </div>
 </div>
-</div>
+<p><img src="hist_log_apt_nums.png" class="img-fluid"></p>
 </section>
 <section id="e" class="level2">
 <h2 class="anchored" data-anchor-id="e">3e</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the first number of each apartment number</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>first_nums <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">substr</span>(apt_numbers, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot histogram of first numbers</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(first_nums, <span class="at">main =</span> <span class="st">"Histogram of apartment number leading digit"</span>, <span class="at">xlab =</span> <span class="st">"Leading digit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the first number of each apartment number</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>first_nums <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">substr</span>(apt_numbers, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot histogram of first numbers</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="st">"barplot_leading_digit.png"</span>)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(first_nums), <span class="at">main =</span> <span class="st">"Barplot of apartment number leading digit"</span>, <span class="at">xlab =</span> <span class="st">"Leading digit"</span>, <span class="at">ylab =</span> <span class="st">"Frequency"</span>)</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Stats-506-PS3_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="cell-output cell-output-stdout">
+<pre><code>quartz_off_screen 
+                2 </code></pre>
 </div>
 </div>
-</div>
+<p><img src="barplot_leading_digit.png" class="img-fluid"></p>
 <p>This distribution looks closer to a Uniform distribution rather than Benford’s law which states that the probability of a higher leading-numbers is smaller than lower ones (the distribution would be decreasing as the first number increases). Thus, I do not think that the apartment numbers would pass as real data.</p>
 </section>
 </section>

@@ -1,7 +1,9 @@
 ---
 title: "Stats 506 PS3"
 author: "Alyssa Yang"
-format: html
+output:
+  html_fragment:
+    self_contained: true
 ---
 
 GitHub repo link: https://github.com/alyssawyang/stats506ps3
@@ -393,7 +395,7 @@ hist(log(apt_numbers), main = "Histogram of the log of apartment numbers", xlab 
 first_nums <- as.numeric(substr(apt_numbers, 1, 1))
 
 # Plot histogram of first numbers
-hist(first_nums, main = "Histogram of apartment number leading digit", xlab = "Leading digit")
+barplot(table(first_nums), main = "Barplot of apartment number leading digit", xlab = "Leading digit", ylab = "Frequency")
 ```
 This distribution looks closer to a Uniform distribution rather than Benford's law which states that the probability of a higher leading-numbers is smaller than lower ones (the distribution would be decreasing as the first number increases). Thus, I do not think that the apartment numbers would pass as real data.
 
